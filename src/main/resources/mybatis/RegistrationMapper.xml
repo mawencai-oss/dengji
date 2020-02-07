@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzxs.dengji.dao.RegistrationMapper" >
+  <resultMap id="BaseResultMap" type="com.lzxs.dengji.domain.Registration" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="temperature" property="temperature" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="destination" property="destination" jdbcType="VARCHAR" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+    <result column="transpartation" property="transpartation" jdbcType="VARCHAR" />
+    <result column="rigisterdata" property="rigisterdata" jdbcType="VARCHAR" />
+    <result column="officer" property="officer" jdbcType="VARCHAR" />
+    <result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+    <result column="visitor" property="visitor" jdbcType="VARCHAR" />
+    <result column="visitor_phone" property="visitorPhone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, username, temperature, origin, destination, idcard, transpartation, rigisterdata, 
+    officer, car_number, visitor, visitor_phone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lzxs.dengji.domain.RegistrationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from registration
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from registration
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from registration
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lzxs.dengji.domain.RegistrationExample" >
+    delete from registration
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lzxs.dengji.domain.Registration" >
+    insert into registration (id, username, temperature, 
+      origin, destination, idcard, 
+      transpartation, rigisterdata, officer, 
+      car_number, visitor, visitor_phone
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{temperature,jdbcType=VARCHAR}, 
+      #{origin,jdbcType=VARCHAR}, #{destination,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{transpartation,jdbcType=VARCHAR}, #{rigisterdata,jdbcType=VARCHAR}, #{officer,jdbcType=VARCHAR}, 
+      #{carNumber,jdbcType=VARCHAR}, #{visitor,jdbcType=VARCHAR}, #{visitorPhone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lzxs.dengji.domain.Registration" >
+    insert into registration
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="origin != null" >
+        origin,
+      </if>
+      <if test="destination != null" >
+        destination,
+      </if>
+      <if test="idcard != null" >
+        idcard,
+      </if>
+      <if test="transpartation != null" >
+        transpartation,
+      </if>
+      <if test="rigisterdata != null" >
+        rigisterdata,
+      </if>
+      <if test="officer != null" >
+        officer,
+      </if>
+      <if test="carNumber != null" >
+        car_number,
+      </if>
+      <if test="visitor != null" >
+        visitor,
+      </if>
+      <if test="visitorPhone != null" >
+        visitor_phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null" >
+        #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="transpartation != null" >
+        #{transpartation,jdbcType=VARCHAR},
+      </if>
+      <if test="rigisterdata != null" >
+        #{rigisterdata,jdbcType=VARCHAR},
+      </if>
+      <if test="officer != null" >
+        #{officer,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null" >
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="visitor != null" >
+        #{visitor,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorPhone != null" >
+        #{visitorPhone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lzxs.dengji.domain.RegistrationExample" resultType="java.lang.Integer" >
+    select count(*) from registration
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update registration
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temperature != null" >
+        temperature = #{record.temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.origin != null" >
+        origin = #{record.origin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destination != null" >
+        destination = #{record.destination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null" >
+        idcard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transpartation != null" >
+        transpartation = #{record.transpartation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rigisterdata != null" >
+        rigisterdata = #{record.rigisterdata,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officer != null" >
+        officer = #{record.officer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNumber != null" >
+        car_number = #{record.carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitor != null" >
+        visitor = #{record.visitor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitorPhone != null" >
+        visitor_phone = #{record.visitorPhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update registration
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      temperature = #{record.temperature,jdbcType=VARCHAR},
+      origin = #{record.origin,jdbcType=VARCHAR},
+      destination = #{record.destination,jdbcType=VARCHAR},
+      idcard = #{record.idcard,jdbcType=VARCHAR},
+      transpartation = #{record.transpartation,jdbcType=VARCHAR},
+      rigisterdata = #{record.rigisterdata,jdbcType=VARCHAR},
+      officer = #{record.officer,jdbcType=VARCHAR},
+      car_number = #{record.carNumber,jdbcType=VARCHAR},
+      visitor = #{record.visitor,jdbcType=VARCHAR},
+      visitor_phone = #{record.visitorPhone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lzxs.dengji.domain.Registration" >
+    update registration
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null" >
+        destination = #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="transpartation != null" >
+        transpartation = #{transpartation,jdbcType=VARCHAR},
+      </if>
+      <if test="rigisterdata != null" >
+        rigisterdata = #{rigisterdata,jdbcType=VARCHAR},
+      </if>
+      <if test="officer != null" >
+        officer = #{officer,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null" >
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="visitor != null" >
+        visitor = #{visitor,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorPhone != null" >
+        visitor_phone = #{visitorPhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lzxs.dengji.domain.Registration" >
+    update registration
+    set username = #{username,jdbcType=VARCHAR},
+      temperature = #{temperature,jdbcType=VARCHAR},
+      origin = #{origin,jdbcType=VARCHAR},
+      destination = #{destination,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      transpartation = #{transpartation,jdbcType=VARCHAR},
+      rigisterdata = #{rigisterdata,jdbcType=VARCHAR},
+      officer = #{officer,jdbcType=VARCHAR},
+      car_number = #{carNumber,jdbcType=VARCHAR},
+      visitor = #{visitor,jdbcType=VARCHAR},
+      visitor_phone = #{visitorPhone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

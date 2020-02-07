@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>甘肃新型冠状病毒-出入口人员管控查询工具 V1.1</title>
+		<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+	</head>
+	<body>
+		<form class="layui-form">
+			<div class="site-title">
+				<fieldset>
+					<legend>
+						<a name="brief">
+							<img src="/static/images/logo.png" /><br />
+							甘肃新型冠状病毒<br />出入口人员管控查询工具<br /><b>v1.1</b></a>
+					</legend>
+				</fieldset>
+			</div>
+
+			<button class="layui-btn layui-form-title">账号登陆页</button>
+
+			<div class="login-img"><img class="" src="/static/images/title.png"/></div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">账户：</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input layui-input-wide" name="t_name" id="t_name" placeholder="请选择你的地区"  autocomplete="off">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码：</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input layui-input-wide" name="t_no" placeholder="输入您的密码">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<button class="layui-btn layui-btn-login" lay-submit lay-filter="search"><a href="3人员上报页.html">登陆</a></button>
+			</div>
+
+		</form>
+		<div class="layui-tab layui-tab-card" lay-filter="chData">
+		</div>
+		<div class="site-title site-tips">
+			&nbsp;&nbsp;&nbsp;&nbsp;<b>特别提示：</b><br /><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 可能接触人员返家后，暂不要外出，居家封闭隔离观察。如有发热症状请就近到网上公布的指定医院发热门诊救治。<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 就诊过程中，要全程佩戴口罩，尽量不要乘坐公共交通工具。<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 可能接触人员要第一时间到所在社区进行登记，并与所在县（市）区疾病预防控制部门取得联系。
+		</div>
+		<div class="site-title site-tips">
+			&nbsp;&nbsp;&nbsp;&nbsp;<b>说明与致谢：</b><br /><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 当前为开发版，存在功能调整，但版本间数据一致<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 数据均人工搜集自经确认的官方公众号/微博/网站<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 感谢目前协助搜集数据的广大网友<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 感谢反馈意见的开发者一级给予支持的互联网厂商<br />
+		</div>
+
+		<script src="/static/js/distpicker.data.min.js"></script>
+		<script src="/static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="/static/js/picker.min.js"></script>
+		<script type="text/javascript" src="/static/js/city.js"></script>
+		<script type="text/javascript" src="/static/js/index.js"></script>
+	</body>
+</html>

@@ -1,0 +1,2 @@
+﻿文件下载网址  =>  文件保存路径
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==  =>  C:\Users\Administrator\Desktop\2019ncov.nosugartech.com\images\40f2850b2a7e4c8d87331270497a7a59.gif

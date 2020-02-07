@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>甘肃新型冠状病毒-出入口人员管控查询工具 V1.1</title>
+		<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+	</head>
+	<body>
+		<form class="layui-form">
+			<div class="site-title">
+				<fieldset>
+					<legend>
+						<a name="brief">
+							<img src="/static/images/logo.png" /><br />
+							甘肃新型冠状病毒<br />出入口人员管控查询工具<br /><b>v1.1</b></a>
+					</legend>
+				</fieldset>
+			</div>
+
+			<button class="layui-btn layui-form-title">人员查询页</button>
+
+
+			<div class="layui-form-item layui-form-item2">
+				<label class="layui-form-label">姓名：</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input layui-input-wide" name="username" id="t_name" placeholder="请输入人员姓名"
+					 autocomplete="off">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-item2">
+				<label class="layui-form-label">身份证：</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input layui-input-wide" name="idcard" placeholder="请输入身份证号码">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-item2">
+				<label class="layui-form-label">日期：</label>
+				<div class="layui-input-block">
+					<input type="text" class="layui-input layui-input-wide" id="t_date" name="rigisterdata" placeholder="日期">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label"></label>
+				<div class="layui-input-inline">
+					<button class="layui-btn" type="button" lay-submit lay-filter="search">查询</button>
+					<button type="reset" class="layui-btn layui-btn-primary" >重置</button>
+				</div>
+			</div>
+
+		</form>
+		<div class="layui-tab layui-tab-card" lay-filter="chData">
+			<ul class="layui-tab-title">
+				<li class="layui-this" lay-id="0">全部</li>
+				<li lay-id="汽车">汽车</li>
+				<li lay-id="电动车">电动车</li>
+				<li lay-id="步行">步行</li>
+
+			</ul>
+			<div class="layui-tab-content">
+				<div class="layui-tab-item layui-show">
+					<table id="type0" lay-filter="trEvent"></table>
+				</div>
+				<div class="layui-tab-item layui-show">
+					<table id="type1" lay-filter="trEvent"></table>
+				</div>
+				<div class="layui-tab-item">
+					<table id="type2" lay-filter="trEvent"></table>
+				</div>
+				<div class="layui-tab-item">
+					<table id="type3" lay-filter="trEvent"></table>
+				</div>
+
+			</div>
+		</div>
+		<div class="site-title site-tips">
+			&nbsp;&nbsp;&nbsp;&nbsp;<b>特别提示：</b><br /><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 可能接触人员返家后，暂不要外出，居家封闭隔离观察。如有发热症状请就近到网上公布的指定医院发热门诊救治。<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 就诊过程中，要全程佩戴口罩，尽量不要乘坐公共交通工具。<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 可能接触人员要第一时间到所在社区进行登记，并与所在县（市）区疾病预防控制部门取得联系。
+		</div>
+		<div class="site-title site-tips">
+			&nbsp;&nbsp;&nbsp;&nbsp;<b>说明与致谢：</b><br /><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 当前为开发版，存在功能调整，但版本间数据一致<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 数据均人工搜集自经确认的官方公众号/微博/网站<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 感谢目前协助搜集数据的广大网友<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;* 感谢反馈意见的开发者一级给予支持的互联网厂商<br />
+		</div>
+
+		<script src="/static/js/distpicker.data.min.js"></script>
+		<script src="/static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/jquery1.42.min.js"></script>
+		<script>
+			layui.use('laydate', function(){
+			  var laydate = layui.laydate;
+			  //日期范围
+			 
+			   laydate.render({
+			      elem: '#t_date'
+			      ,format: 'yyyy年MM月dd日'
+			    });
+			});
+		</script>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+		<script>
+			var gtype = 0; //当前标签页
+			var tmpData = null;
+			var AllData = null;
+			var gTable = null;
+
+			//表格通用函数
+			function tablefun(_table, _type, _data) {
+
+			  //_type 交通类型
+			  //_data 表格数据
+			  _table.render({
+				elem: '#type' + _type
+				, data: _data //数据
+				, page: true
+				, toolbar: '<div><b style="color:#009688">点击表格行查看详情</b></div>' 
+				, defaultToolbar: ['filter']
+				, cols: [[ //表头
+				  { field: 'id', title: '姓名', width: 70, fixed: 'left' }
+				  ,{ field: 'username', title: '姓名', width: 70, fixed: 'left', event: 'displaydetails' }
+				  , { field: 'rigisterdata', title: '日期', width: 110, sort: true, event: 'displaydetails'}
+				  , { field: 'origin', title: '来源地', width: 90, sort: true, event: 'displaydetails' }
+				  , { field: 'destination', title: '到达地', width: 90, sort: true, event: 'displaydetails' }
+				  , { field: 'temperature', title: '体温', width: 70, sort: true, event: 'displaydetails' }
+				  , { field: 'transpartation', title: '交通工具', width: 90, sort: true, event: 'displaydetails'}
+				  , { field: 'officer', title: '上报来源', width: 200, event: 'displaydetails' }
+				  ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+				]],
+				text: {
+				  none: '暂无该人员或地点存在确诊病例，数据如有遗漏或错误，请反馈给我们！' 
+				}
+			  ,done:function () {
+				  $("[data-field='id']").css("display","none")
+			  }
+			  });
+			}
+
+			//layui通用模块
+			layui.use(['table', "form", 'element', 'laydate', 'jquery'], function () {
+			  var element = layui.element;
+			  gElement = layui.element;
+			  var table = layui.table;
+			  gTable = layui.table;
+			  var laydate = layui.laydate;
+			  var form = layui.form;
+			  var $ = layui.jquery;
+
+			  //日期控件
+			  laydate.render({
+				elem: '#t_date'
+			  });
+
+			  //标签切换
+			  element.on('tab(chData)', function () {
+				gtype = this.getAttribute('lay-id');
+				tablefun(table, gtype, tmpData);
+			  });
+			  
+			  //表格行数据详情查看
+			  table.on('tool(trEvent)', function(obj){
+				var data = obj.data;
+				if(obj.event=='del'){
+                    var data = obj.data;
+                    if(obj.event === 'del'){
+                        layer.confirm('真的删除行么', function(index){
+                            obj.del();
+                            $.get("/deleteregbyid?id="+data.id,function (res) {
+                                layer.msg(res.msg)
+                            })
+                            layer.close(index);
+                        });
+                    }
+				}
+				if(obj.event === 'displaydetails'){
+				  layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: true
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'toolmao' //设定一个id，防止重复弹出
+					,moveType: 1 //拖拽模式，0或者1
+					,shade: 0 //不显示遮罩
+					,area: ['90%', '90%']
+					,content: '<div style="background:#fff;padding:.2rem .45rem;border-radius:.2rem"><h2 style="text-align:center;margin-top:1rem">信息详情</h2><table class="layui-table" style="table-layout:fixed"><tr><td>姓名</td><td>'+data.username+'</td></tr><tr><td>日期</td><td>'+data.rigisterdata+'</td></tr><tr><td>来源地</td><td>'+data.origin+'</td></tr><tr>' +
+					  '<td>到达地</td><td>'+data.destination+'</td></tr><tr><td>车牌号</td><td>'+data.carNumber+'</td></tr><tr><td>体温</td><td>'+data.temperature+'</td></tr><tr><td width="80">交通工具</td><td>'+[data.transpartation]+'</td></tr>' +
+					  '<tr><td>访问者</td><td>'+data.visitor+'</td></tr><tr><td>访问者电话</td><td>'+data.visitorPhone+'</td></tr>' +
+					  '<tr><td>上报来源</td><td>'+data.officer+'</td></tr><tr><td>上报时间</td><td>'+data.rigisterdata+'</td></tr><tr><td>事件备注</td><td>'+(data.remark || '')+'</td></tr></table></div>'
+				  });
+				}
+			  });
+
+			  //搜索功能
+			  form.on("submit(search)", function (data) {
+				last_param = data.field;
+				console.log(last_param)
+				  $.post("/findbyexample",last_param,function (res) {
+                      AllData = result.data;
+                      //页面初次载入，表格初始化
+                      tablefun(table, gtype, AllData);
+                  })
+				return false;
+			  });
+			  /*表格载入*/
+                $.getJSON("/findallreg", function (result) {
+                    AllData = result.data.list;
+                    console.log(AllData)
+                    //页面初次载入，表格初始化
+                    tablefun(table, gtype, AllData);
+                });
+			});
+		  </script>
+	</body>
+</html>
